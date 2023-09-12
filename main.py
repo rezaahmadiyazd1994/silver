@@ -331,7 +331,7 @@ def pred_silver():
     silver_news_2 = News()
     silver_final = Final_Calc()
 
-    api_key = 'goldapi-pzslrli9209sg-io'
+    api_key = 'goldapi-19j4clrlk5p94q2-io'
     # get live stream silver data from goldapi.io
     silver.live_data('http://www.goldapi.io/api/XAG/USD',api_key)
     # get silver prices from json file
