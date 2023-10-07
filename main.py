@@ -331,7 +331,7 @@ def pred_silver():
     silver_news_2 = News()
     silver_final = Final_Calc()
 
-    with open('key.txt') as f:
+    with open('key') as f:
         api_key = f.read()
     api_key = str(api_key)
     print(api_key)
