@@ -16,6 +16,8 @@ from nltk.corpus import stopwords
 import os
 from datetime import datetime
 from abc import ABC, abstractmethod
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+
 
 global sell_counter,buy_counter
 sell_counter = 0
@@ -162,9 +164,11 @@ class News(Analyes_News):
     percent_negative = 0
     pns = NULL
 
+
     def ProcessNews(self,urls,element,class_element):
         global pn,pns,stop_words,buy_counter,sell_counter
         stop_words = set(stopwords.words('english'))
+        analyzer = SentimentIntensityAnalyzer()
 
         for url in urls:
             response = requests.get(url)
@@ -183,11 +187,15 @@ class News(Analyes_News):
                         
                     lemma_word = []
                     wordnet_lemmatizer = WordNetLemmatizer()
+
+                    
                     for w in filtered_sentence:
                         word1 = wordnet_lemmatizer.lemmatize(w, pos = "n")
                         word2 = wordnet_lemmatizer.lemmatize(word1, pos = "v")
                         word3 = wordnet_lemmatizer.lemmatize(word2, pos = ("a"))
                         lemma_word.append(word3)
+                        
+
                 
                 s = filtered_sentence
             
@@ -195,7 +203,9 @@ class News(Analyes_News):
                 tweet = str(tweet)
                 tweet = BeautifulSoup(tweet, "lxml").text
 
+                vs = analyzer.polarity_scores(tweet)
                 # create TextBlob object of passed tweet text 
+                
                 import re 
                 analysis = TextBlob(' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())) 
                 
